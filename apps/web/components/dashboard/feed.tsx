@@ -2,17 +2,43 @@
 
 import type { Post } from "@repo/trpc/schemas";
 import { Heart, MessageCircle, User } from "lucide-react";
+import { useState } from "react";
 import { getImageUrl } from "@/lib/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import PostComments from "./post-comments";
 
 interface FeedProps {
   posts: Post[];
   isLoading?: boolean;
   onLikePost: (postId: number) => void;
+  onAddComment: (postId: number, text: string) => void;
+  onDeleteComment: (commentId: number) => void;
 }
 
-export default function Feed({ posts, isLoading, onLikePost }: FeedProps) {
+export default function Feed({
+  posts,
+  isLoading,
+  onLikePost,
+  onAddComment,
+  onDeleteComment,
+}: FeedProps) {
+  const [expandedComments, setExpandedComments] = useState<Set<number>>(
+    new Set(),
+  );
+
+  const toggleComments = (postId: number) => {
+    setExpandedComments((prev) => {
+      const next = new Set(prev);
+      if (next.has(postId)) {
+        next.delete(postId);
+      } else {
+        next.add(postId);
+      }
+      return next;
+    });
+  };
+
   if (isLoading) {
     return (
       <div className="space-y-4">
@@ -46,6 +72,7 @@ export default function Feed({ posts, isLoading, onLikePost }: FeedProps) {
       {posts.map((post) => {
         const avatarUrl = getImageUrl(post.user.avatar);
         const imageUrl = getImageUrl(post.image);
+        const commentsOpen = expandedComments.has(post.id);
 
         return (
           <Card key={post.id} className="overflow-hidden py-0 gap-0">
@@ -86,8 +113,15 @@ export default function Feed({ posts, isLoading, onLikePost }: FeedProps) {
                     className={`size-5 ${post.isLiked ? "fill-red-500 text-red-500" : ""}`}
                   />
                 </Button>
-                <Button type="button" variant="ghost" size="icon-sm" disabled>
-                  <MessageCircle className="size-5" />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon-sm"
+                  onClick={() => toggleComments(post.id)}
+                >
+                  <MessageCircle
+                    className={`size-5 ${commentsOpen ? "fill-primary text-primary" : ""}`}
+                  />
                 </Button>
               </div>
 
@@ -98,9 +132,30 @@ export default function Feed({ posts, isLoading, onLikePost }: FeedProps) {
                 {post.caption}
               </p>
 
+              {post.comments > 0 && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="h-auto p-0 text-sm text-muted-foreground hover:bg-transparent hover:opacity-80"
+                  onClick={() => toggleComments(post.id)}
+                >
+                  View all {post.comments} comments
+                </Button>
+              )}
+
               <p className="text-xs uppercase text-muted-foreground">
                 {new Date(post.timestamp).toLocaleDateString()}
               </p>
+
+              {commentsOpen && (
+                <div className="border-t pt-4">
+                  <PostComments
+                    postId={post.id}
+                    onAddComment={onAddComment}
+                    onDeleteComment={onDeleteComment}
+                  />
+                </div>
+              )}
             </CardContent>
           </Card>
         );
