@@ -1,159 +1,274 @@
-# Turborepo starter
+# Insta Full Stack
 
-This Turborepo starter is maintained by the Turborepo core team.
+An Instagram-style social feed built as a TypeScript monorepo. Users can sign up, log in, upload photos, browse a feed, and like posts — with end-to-end type safety from the database to the UI.
 
-## Using this example
+## Project structure
 
-Run the following command:
-
-```sh
-npx create-turbo@latest
+```
+insta-full-stack/
+├── apps/
+│   ├── web/          # Next.js frontend
+│   └── api/          # NestJS backend
+└── packages/
+    ├── trpc/         # Shared Zod schemas + AppRouter types
+    ├── ui/           # Shared React components
+    ├── eslint-config/
+    └── typescript-config/
 ```
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+## Frontend — `apps/web`
 
-### Apps and Packages
+The web app is a **Next.js** client that talks to the API through tRPC and Better Auth session cookies.
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### Core
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+| Tool | Purpose |
+|------|---------|
+| [Next.js 16](https://nextjs.org) | React framework with App Router |
+| [React 19](https://react.dev) | UI library |
+| [TypeScript](https://www.typescriptlang.org) | Static typing |
 
-### Utilities
+### Styling & UI
 
-This Turborepo has some additional tools already setup for you:
+| Tool | Purpose |
+|------|---------|
+| [Tailwind CSS v4](https://tailwindcss.com) | Utility-first CSS |
+| [@tailwindcss/postcss](https://tailwindcss.com) | PostCSS integration for Tailwind v4 |
+| [shadcn/ui](https://ui.shadcn.com) | Component library (base-nova style) |
+| [@base-ui/react](https://base-ui.com) | Headless UI primitives |
+| [@radix-ui/react-slot](https://www.radix-ui.com) | Composable component slots |
+| [class-variance-authority](https://cva.style) | Variant-based component styling |
+| [clsx](https://github.com/lukeed/clsx) + [tailwind-merge](https://github.com/dcastil/tailwind-merge) | Conditional and merged class names |
+| [lucide-react](https://lucide.dev) | Icons |
+| [tw-animate-css](https://github.com/Wombosvideo/tw-animate-css) | Tailwind animation utilities |
+| [next-themes](https://github.com/pacocoursey/next-themes) | Light / dark mode |
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+### Data & API
 
-### Build
+| Tool | Purpose |
+|------|---------|
+| [tRPC](https://trpc.io) (`@trpc/react-query`) | Type-safe API client |
+| [TanStack Query](https://tanstack.com/query) | Server-state caching and mutations |
+| [@repo/trpc](packages/trpc) | Shared schemas and `AppRouter` types |
+| [Zod](https://zod.dev) | Runtime validation (forms + shared schemas) |
 
-To build all apps and packages, run the following command:
+### Auth
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+| Tool | Purpose |
+|------|---------|
+| [Better Auth](https://www.better-auth.com) | Client SDK and session cookies |
+| Next.js middleware | Protects routes; redirects to `/login` |
 
-```sh
-cd my-turborepo
-turbo build
+### Forms
+
+| Tool | Purpose |
+|------|---------|
+| [React Hook Form](https://react-hook-form.com) | Form state management |
+| [@hookform/resolvers](https://github.com/react-hook-form/resolvers) | Zod resolver for form validation |
+
+### Dev tooling
+
+| Tool | Purpose |
+|------|---------|
+| [ESLint](https://eslint.org) | Linting (`@repo/eslint-config`) |
+| `@repo/ui` | Shared components from the monorepo |
+
+### Frontend scripts
+
+```bash
+pnpm dev --filter web      # http://localhost:3000
+pnpm build --filter web
+pnpm lint --filter web
+pnpm check-types --filter web
 ```
 
-Without global `turbo`, use your package manager:
+---
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
+## Backend — `apps/api`
+
+The API is a **NestJS** server exposing tRPC procedures, REST upload endpoints, and Better Auth routes.
+
+### Core
+
+| Tool | Purpose |
+|------|---------|
+| [NestJS 11](https://nestjs.com) | API server framework |
+| [Express](https://expressjs.com) (`@nestjs/platform-express`) | HTTP adapter |
+| [TypeScript](https://www.typescriptlang.org) | Static typing |
+| [RxJS](https://rxjs.dev) | Reactive utilities (NestJS dependency) |
+
+### API layer
+
+| Tool | Purpose |
+|------|---------|
+| [tRPC](https://trpc.io) (`@trpc/server`) | Type-safe RPC procedures |
+| [nestjs-trpc](https://github.com/KevinEdry/nestjs-trpc) | tRPC routers as NestJS modules/decorators |
+| [@repo/trpc](packages/trpc) | Shared Zod schemas for inputs/outputs |
+| [Zod](https://zod.dev) | Procedure input/output validation |
+
+### Auth
+
+| Tool | Purpose |
+|------|---------|
+| [Better Auth](https://www.better-auth.com) | Authentication library |
+| [@thallesp/nestjs-better-auth](https://github.com/thallesp/nestjs-better-auth) | NestJS integration (guards, session API) |
+| tRPC auth middleware | Attaches `user` and `session` to request context |
+
+### Database
+
+| Tool | Purpose |
+|------|---------|
+| [PostgreSQL](https://www.postgresql.org) | Primary database |
+| [Drizzle ORM](https://orm.drizzle.team) | Type-safe queries and relations |
+| [drizzle-kit](https://orm.drizzle.team/kit-docs/overview) | Migrations and Drizzle Studio |
+| [pg](https://node-postgres.com) | Postgres driver |
+| [@nestjs/config](https://docs.nestjs.com/techniques/configuration) | Environment variable loading |
+
+### File uploads
+
+| Tool | Purpose |
+|------|---------|
+| [Multer](https://github.com/expressjs/multer) | Multipart file handling |
+| Local storage provider | Saves images to `/uploads` (S3 planned) |
+| [uuid](https://github.com/uuidjs/uuid) | Unique filenames |
+
+### Testing & dev tooling
+
+| Tool | Purpose |
+|------|---------|
+| [Jest](https://jestjs.io) | Unit and e2e tests |
+| [Supertest](https://github.com/ladjs/supertest) | HTTP assertions in e2e tests |
+| [ESLint](https://eslint.org) + [Prettier](https://prettier.io) | Linting and formatting |
+
+### Backend scripts
+
+```bash
+pnpm dev --filter api       # http://localhost:3001
+pnpm build --filter api
+pnpm --filter api db:generate   # create migration after schema change
+pnpm --filter api db:migrate    # apply migrations
+pnpm --filter api db:studio     # open Drizzle Studio
+pnpm --filter api auth:generate # regenerate Better Auth schema
+pnpm --filter api test
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+## Monorepo tooling
 
-```sh
-turbo build --filter=docs
+| Tool | Purpose |
+|------|---------|
+| [pnpm](https://pnpm.io) | Package manager and workspaces |
+| [Turborepo](https://turbo.build) | Parallel dev/build across apps |
+| [Prettier](https://prettier.io) | Code formatting |
+| `@repo/typescript-config` | Shared TypeScript configs |
+| `@repo/eslint-config` | Shared ESLint configs |
+
+---
+
+## Features
+
+- Email/password sign-up and login
+- Protected routes (middleware redirects unauthenticated users)
+- Photo feed with likes (optimistic UI updates)
+- Create posts with image upload
+- Avatar upload from the sidebar
+- Light / dark theme toggle
+
+---
+
+## Getting started
+
+### Prerequisites
+
+- Node.js 18+
+- pnpm 9
+- PostgreSQL 16+
+
+### 1. Install dependencies
+
+```bash
+pnpm install
 ```
 
-Without global `turbo`:
+### 2. Start PostgreSQL
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```bash
+docker run -d \
+  --name insta-postgres \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=postgres \
+  -e POSTGRES_DB=insta \
+  -p 5432:5432 \
+  postgres:16
 ```
 
-### Develop
+### 3. Environment variables
 
-To develop all apps and packages, run the following command:
+**API** — `apps/api/.env` (copy from `.env.example`):
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
+```bash
+PORT=3001
+WEB_URL=http://localhost:3000
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/insta
+DATABASE_SSL=false
+BETTER_AUTH_SECRET=<openssl rand -base64 32>
+BETTER_AUTH_URL=http://localhost:3001
+STORAGE_TYPE=local
 ```
 
-Without global `turbo`, use your package manager:
+**Web** — `apps/web/.env.local`:
 
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
+```bash
+API_URL=http://localhost:3001
+NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+### 4. Migrate the database
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
+```bash
+pnpm --filter api db:migrate
 ```
 
-Without global `turbo`:
+### 5. Run both apps
 
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+```bash
+pnpm dev
 ```
 
-### Remote Caching
+| App | URL |
+|-----|-----|
+| Web | http://localhost:3000 |
+| API | http://localhost:3001 |
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+---
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## How frontend and backend connect
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
+```
+Browser (Next.js :3000)
+    │
+    ├── /api/trpc/*  ──rewrite──►  NestJS tRPC      (:3001/api/trpc)
+    ├── /api/auth/*  ──rewrite──►  Better Auth      (:3001/api/auth)
+    └── /uploads/*   ──direct───►  NestJS static    (:3001/uploads)
 ```
 
-Without global `turbo`, use your package manager:
+Shared types flow through `@repo/trpc`: Zod schemas defined once are used by NestJS routers (validation) and the React client (TypeScript inference).
 
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
+---
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## Root scripts
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start web + api in watch mode |
+| `pnpm build` | Build all apps and packages |
+| `pnpm lint` | Lint everything |
+| `pnpm check-types` | Type-check everything |
+| `pnpm format` | Run Prettier |
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+## License
 
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+Private — UNLICENSED
