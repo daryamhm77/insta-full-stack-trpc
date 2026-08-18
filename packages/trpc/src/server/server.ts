@@ -1,5 +1,11 @@
 import { initTRPC } from "@trpc/server";
 import { z } from "zod";
+import {
+  commentSchema,
+  createCommentSchema,
+  deleteCommentSchema,
+  getCommentsSchema,
+} from "../schemas/comment";
 import { createPostSchema, likePostSchema, postSchema } from "../schemas/post";
 
 const t = initTRPC.create();
@@ -22,6 +28,18 @@ export const appRouter = router({
       .mutation(async () => undefined as void),
     likePost: publicProcedure
       .input(likePostSchema)
+      .mutation(async () => undefined as void),
+  }),
+  comments: router({
+    create: publicProcedure
+      .input(createCommentSchema)
+      .mutation(async () => undefined as void),
+    findByPostId: publicProcedure
+      .input(getCommentsSchema)
+      .output(z.array(commentSchema))
+      .query(async () => [] as z.infer<typeof commentSchema>[]),
+    delete: publicProcedure
+      .input(deleteCommentSchema)
       .mutation(async () => undefined as void),
   }),
 });

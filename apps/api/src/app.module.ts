@@ -14,6 +14,7 @@ import * as schema from './db/schema';
 import { TRPCModule } from 'nestjs-trpc';
 import { UsersModule } from './auth/users/users.module';
 import { UploadModule } from './upload/upload.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { UploadModule } from './upload/upload.module';
     PostsModule,
     UsersModule,
     UploadModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, AppContext, AuthTrpcMiddleware],

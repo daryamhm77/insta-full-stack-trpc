@@ -41,6 +41,30 @@ export default function Home() {
       await utils.posts.findAll.invalidate();
     },
   });
+  const createComment = trpc.comments.create.useMutation({
+    onSuccess: async (_, variables) => {
+      await utils.comments.findByPostId.invalidate({
+        postId: variables.postId,
+      });
+
+      utils.posts.findAll.setData(undefined, (old) => {
+        if (!old) return old;
+
+        return old.map((post) => {
+          if (post.id === variables.postId) {
+            return { ...post, comments: post.comments + 1 };
+          }
+          return post;
+        });
+      });
+    },
+  });
+  const deleteComment = trpc.comments.delete.useMutation({
+    onSuccess: async () => {
+      await utils.comments.findByPostId.invalidate();
+      await utils.posts.findAll.invalidate();
+    },
+  });
 
   const handleCreatePost = async (file: File, caption: string) => {
     const formData = new FormData();
@@ -89,6 +113,12 @@ export default function Home() {
               posts={postsQuery.data ?? []}
               isLoading={postsQuery.isLoading}
               onLikePost={(postId) => likePost.mutate({ postId })}
+              onAddComment={(postId, text) => {
+                createComment.mutate({ postId, text });
+              }}
+              onDeleteComment={(commentId) => {
+                deleteComment.mutate({ commentId });
+              }}
             />
           </div>
 
