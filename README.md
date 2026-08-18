@@ -272,3 +272,4 @@ Shared types flow through `@repo/trpc`: Zod schemas defined once are used by Nes
 ## License
 
 Private — UNLICENSED
+# insta-full-stack-trpc
