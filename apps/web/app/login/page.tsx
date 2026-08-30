@@ -1,17 +1,19 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import type { UseFormSetError } from "react-hook-form";
+import { AuthShell } from "@/components/auth/auth-shell";
 import LoginForm from "@/components/auth/login-form";
 import { authClient } from "@/lib/auth/auth-client";
-import { LogInSchemaType } from "@/lib/auth/schema";
-import { useRouter } from "next/navigation";
-import { UseFormSetError } from "react-hook-form";
+import type { LogInSchemaType } from "@/lib/auth/schema";
 
 export default function LoginPage() {
   const router = useRouter();
 
   const handleLogin = async (
     data: LogInSchemaType,
-    setError: UseFormSetError<LogInSchemaType>
+    setError: UseFormSetError<LogInSchemaType>,
   ) => {
     const { error } = await authClient.signIn.email({
       email: data.email,
@@ -20,33 +22,32 @@ export default function LoginPage() {
 
     if (error) {
       setError("root", {
-        message: "Invalid email or password. Please try again",
+        message:
+          error.message ?? "Invalid email or password. Please try again.",
       });
       return;
     }
 
     router.push("/");
+    router.refresh();
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <h2 className="mt-6 text-3xl font-extrabold text-foreground">
-            Sign in to your account
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Don&apos;t have an account?{" "}
-            <a
-              href="/signup"
-              className="font-medium text-primary hover:text-primary/90"
-            >
-              Create one here
-            </a>
-          </p>
-        </div>
-        <LoginForm onSubmit={handleLogin} />
-      </div>
-    </div>
+    <AuthShell
+      title="Welcome back."
+      subtitle={
+        <>
+          Sign in to your Insta account to keep sharing with your community.{" "}
+          <Link
+            href="/signup"
+            className="font-medium text-zinc-800 underline-offset-4 hover:underline"
+          >
+            Create one
+          </Link>
+        </>
+      }
+    >
+      <LoginForm onSubmit={handleLogin} />
+    </AuthShell>
   );
 }

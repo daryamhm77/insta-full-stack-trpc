@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { AuthShell } from "@/components/auth/auth-shell";
 import SignupForm from "@/components/auth/signup-form";
 import { authClient } from "@/lib/auth/auth-client";
-import { SignUpSchemaType } from "@/lib/auth/schema";
-import { useRouter } from "next/navigation";
+import type { SignUpSchemaType } from "@/lib/auth/schema";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -19,33 +21,39 @@ export default function SignupPage() {
       throw new Error(error.message ?? "Failed to create account");
     }
 
-    await authClient.signIn.email({
+    const signInResult = await authClient.signIn.email({
       email: data.email,
       password: data.password,
     });
 
+    if (signInResult.error) {
+      throw new Error(
+        signInResult.error.message ??
+          "Account created, but sign-in failed. Try logging in.",
+      );
+    }
+
     router.push("/");
+    router.refresh();
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <h2 className="mt-6 text-4xl font-extrabold text-foreground">
-            Create your account
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Already have an account?{" "}
-            <a
-              href="/login"
-              className="font-medium text-primary hover:text-primary/90"
-            >
-              Sign in here
-            </a>
-          </p>
-        </div>
-        <SignupForm onSubmit={handleSignup} />
-      </div>
-    </div>
+    <AuthShell
+      title="Get started absolutely free."
+      subtitle={
+        <>
+          Welcome to Insta, please enter your details below to create a new
+          account.{" "}
+          <Link
+            href="/login"
+            className="font-medium text-zinc-800 underline-offset-4 hover:underline"
+          >
+            Sign in
+          </Link>
+        </>
+      }
+    >
+      <SignupForm onSubmit={handleSignup} />
+    </AuthShell>
   );
 }

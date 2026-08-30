@@ -1,7 +1,15 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  index,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 import { comment } from "src/comments/schemas/schema";
-import { post } from "src/posts/schemas/schema";
+import { like, post } from "src/posts/schemas/schema";
+import { story } from "src/stories/schemas/schema";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -9,6 +17,8 @@ export const user = pgTable("user", {
   email: text("email").notNull().unique(),
   emailVerified: boolean("email_verified").default(false).notNull(),
   image: text("image"),
+  bio: text("bio"),
+  website: text("website"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
@@ -75,11 +85,43 @@ export const verification = pgTable(
   (table) => [index("verification_identifier_idx").on(table.identifier)],
 );
 
+export const follow = pgTable(
+  "follow",
+  {
+    followerId: text("follower_id")
+      .notNull()
+      .references(() => user.id),
+    followingId: text("following_id")
+      .notNull()
+      .references(() => user.id),
+  },
+  (table) => [
+    primaryKey({ columns: [table.followerId, table.followingId] }),
+  ],
+);
+
+export const followRelations = relations(follow, ({ one }) => ({
+  follower: one(user, {
+    fields: [follow.followerId],
+    references: [user.id],
+    relationName: "followers",
+  }),
+  following: one(user, {
+    fields: [follow.followingId],
+    references: [user.id],
+    relationName: "following",
+  }),
+}));
+
 export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   posts: many(post),
+  likes: many(like),
   comments: many(comment),
+  stories: many(story),
+  followers: many(follow, { relationName: "following" }),
+  following: many(follow, { relationName: "followers" }),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
