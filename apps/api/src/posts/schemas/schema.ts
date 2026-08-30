@@ -20,6 +20,7 @@ export const postRelations = relations(post, ({ one, many }) => ({
   }),
   likes: many(like),
   comments: many(comment),
+  savedBy: many(savedPost),
 }));
 
 export const like = pgTable('like', {
@@ -39,6 +40,30 @@ export const likeRelations = relations(like, ({ one }) => ({
   }),
   post: one(post, {
     fields: [like.postId],
+    references: [post.id],
+  }),
+}));
+
+export const savedPost = pgTable('saved_post', {
+  id: serial('id').primaryKey(),
+  userId: text('user_id')
+    .notNull()
+    .references(() => user.id, { onDelete: 'cascade' }),
+  postId: integer('post_id')
+    .notNull()
+    .references(() => post.id, { onDelete: 'cascade' }),
+  createdAt: timestamp('created_at')
+    .$defaultFn(() => new Date())
+    .notNull(),
+});
+
+export const savedPostRelations = relations(savedPost, ({ one }) => ({
+  user: one(user, {
+    fields: [savedPost.userId],
+    references: [user.id],
+  }),
+  post: one(post, {
+    fields: [savedPost.postId],
     references: [post.id],
   }),
 }));

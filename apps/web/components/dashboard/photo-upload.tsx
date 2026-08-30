@@ -6,13 +6,11 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
 
 const ACCEPTED_TYPES = ["image/jpeg", "image/png", "image/gif", "image/webp"];
 const MAX_SIZE_MB = 5;
@@ -93,10 +91,15 @@ export default function PhotoUpload({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-md" showCloseButton={!isUploading}>
+      <DialogContent
+        className="create-post-modal gap-5 p-5 sm:max-w-[520px]"
+        showCloseButton={!isUploading}
+      >
         <DialogHeader>
-          <DialogTitle>Create new post</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-[var(--text-primary)]">
+            Create new post
+          </DialogTitle>
+          <DialogDescription className="text-[var(--text-muted)]">
             Add a photo and a short caption to share.
           </DialogDescription>
         </DialogHeader>
@@ -105,6 +108,7 @@ export default function PhotoUpload({
           <div
             role="button"
             tabIndex={0}
+            data-dragging={isDragging}
             onKeyDown={(event) => {
               if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
@@ -118,28 +122,25 @@ export default function PhotoUpload({
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
             onClick={() => inputRef.current?.click()}
-            className={cn(
-              "flex cursor-pointer flex-col items-center justify-center rounded-xl border border-dashed px-6 py-10 text-center transition-colors",
-              isDragging
-                ? "border-primary bg-primary/5"
-                : "border-muted-foreground/25 hover:border-muted-foreground/50",
-            )}
+            className="upload-zone cursor-pointer"
           >
-            <Upload className="mb-3 size-10 text-muted-foreground" />
-            <p className="mb-1 text-sm font-medium">Drag a photo here</p>
-            <p className="mb-4 text-xs text-muted-foreground">
+            <Upload className="mb-1 size-10 text-[var(--text-muted)]" />
+            <p className="text-sm font-medium text-[var(--text-primary)]">
+              Drag a photo here
+            </p>
+            <p className="mb-2 text-xs text-[var(--text-muted)]">
               JPG, PNG, GIF, or WebP · up to {MAX_SIZE_MB}MB
             </p>
             <Button
               type="button"
-              variant="outline"
+              variant="ghost"
               size="sm"
               onClick={(event) => {
                 event.stopPropagation();
                 inputRef.current?.click();
               }}
             >
-              <ImageIcon className="size-4" />
+              <ImageIcon aria-hidden="true" />
               Choose file
             </Button>
             <input
@@ -155,28 +156,26 @@ export default function PhotoUpload({
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="relative overflow-hidden rounded-xl bg-muted">
+            <div className="image-preview bg-[var(--bg-secondary)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={preview}
-                alt="Selected preview"
-                className="h-64 w-full object-cover"
-              />
+              <img src={preview} alt="Selected preview" />
               <Button
                 type="button"
-                variant="secondary"
+                variant="ghost"
                 size="icon-sm"
                 className="absolute top-2 right-2"
                 onClick={reset}
                 disabled={isUploading}
+                aria-label="Remove photo"
               >
-                <X className="size-4" />
-                <span className="sr-only">Remove photo</span>
+                <X aria-hidden="true" />
               </Button>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="caption">Caption</Label>
+              <Label htmlFor="caption" className="text-[var(--text-secondary)]">
+                Caption
+              </Label>
               <textarea
                 id="caption"
                 rows={3}
@@ -184,14 +183,14 @@ export default function PhotoUpload({
                 disabled={isUploading}
                 placeholder="Write a caption..."
                 onChange={(event) => setCaption(event.target.value)}
-                className="w-full resize-none rounded-lg border border-input bg-transparent px-3 py-2 text-sm outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:opacity-50"
+                className="caption-input text-sm disabled:opacity-50"
               />
             </div>
 
-            <DialogFooter>
+            <div className="modal-footer">
               <Button
                 type="button"
-                variant="outline"
+                variant="ghost"
                 onClick={reset}
                 disabled={isUploading}
               >
@@ -199,17 +198,18 @@ export default function PhotoUpload({
               </Button>
               <Button
                 type="button"
+                variant="ghost"
                 onClick={handleUpload}
                 disabled={isUploading || !caption.trim()}
               >
                 {isUploading ? "Sharing..." : "Share"}
               </Button>
-            </DialogFooter>
+            </div>
           </div>
         )}
 
         {error ? (
-          <p className="text-sm text-destructive" role="alert">
+          <p className="text-sm text-[var(--danger)]" role="alert">
             {error}
           </p>
         ) : null}

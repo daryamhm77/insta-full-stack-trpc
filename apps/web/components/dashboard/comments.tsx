@@ -88,7 +88,7 @@ export default function Comments({
           placeholder="Add a comment..."
           className="flex-1"
         />
-        <Button type="submit" disabled={!commentText.trim()}>
+        <Button type="submit" variant="ghost" disabled={!commentText.trim()}>
           Post
         </Button>
       </form>

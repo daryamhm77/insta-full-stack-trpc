@@ -48,6 +48,7 @@ export default function FileUploadArea({
     <div
       role="button"
       tabIndex={0}
+      data-dragging={isDragging}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
@@ -58,29 +59,25 @@ export default function FileUploadArea({
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       onClick={() => fileInputRef.current?.click()}
-      className={cn(
-        "cursor-pointer rounded-xl border border-dashed px-6 py-10 text-center transition-colors",
-        isDragging
-          ? "border-primary bg-primary/5"
-          : "border-muted-foreground/25 hover:border-muted-foreground/50",
-        className,
-      )}
+      className={cn("upload-zone cursor-pointer", className)}
     >
-      <Upload className="mx-auto mb-3 size-10 text-muted-foreground" />
-      <p className="mb-1 text-sm font-medium">Drag a photo here</p>
-      <p className="mb-4 text-xs text-muted-foreground">
+      <Upload className="size-10 text-[var(--text-muted)]" />
+      <p className="text-sm font-medium text-[var(--text-primary)]">
+        Drag a photo here
+      </p>
+      <p className="mb-1 text-xs text-[var(--text-muted)]">
         or click to select from your computer
       </p>
       <Button
         type="button"
-        variant="outline"
+        variant="ghost"
         size="sm"
         onClick={(event) => {
           event.stopPropagation();
           fileInputRef.current?.click();
         }}
       >
-        <ImageIcon className="size-4" />
+        <ImageIcon aria-hidden="true" />
         Choose file
       </Button>
       <input

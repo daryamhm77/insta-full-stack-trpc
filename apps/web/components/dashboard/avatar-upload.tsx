@@ -8,7 +8,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -70,10 +69,15 @@ export default function AvatarUpload({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-md" showCloseButton={!isUploading}>
+      <DialogContent
+        className="create-post-modal gap-5 p-5 sm:max-w-[520px]"
+        showCloseButton={!isUploading}
+      >
         <DialogHeader>
-          <DialogTitle>Update profile picture</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-[var(--text-primary)]">
+            Update profile picture
+          </DialogTitle>
+          <DialogDescription className="text-[var(--text-muted)]">
             Choose a new photo for your avatar.
           </DialogDescription>
         </DialogHeader>
@@ -86,7 +90,7 @@ export default function AvatarUpload({
                 <img
                   src={currentAvatarUrl}
                   alt="Current avatar"
-                  className="size-24 rounded-full border object-cover"
+                  className="size-24 rounded-full border border-[var(--border-soft)] object-cover"
                 />
               </div>
             ) : null}
@@ -100,26 +104,26 @@ export default function AvatarUpload({
                 <img
                   src={preview}
                   alt="Avatar preview"
-                  className="size-32 rounded-full border-2 border-primary object-cover"
+                  className="size-32 rounded-full border-2 border-[var(--ice-400)] object-cover"
                 />
                 <Button
                   type="button"
-                  variant="secondary"
+                  variant="ghost"
                   size="icon-sm"
                   className="absolute -top-1 -right-1 rounded-full"
                   onClick={clearSelection}
                   disabled={isUploading}
+                  aria-label="Remove selection"
                 >
-                  <X className="size-4" />
-                  <span className="sr-only">Remove selection</span>
+                  <X aria-hidden="true" />
                 </Button>
               </div>
             </div>
 
-            <DialogFooter>
+            <div className="modal-footer">
               <Button
                 type="button"
-                variant="outline"
+                variant="ghost"
                 onClick={clearSelection}
                 disabled={isUploading}
               >
@@ -127,17 +131,18 @@ export default function AvatarUpload({
               </Button>
               <Button
                 type="button"
+                variant="ghost"
                 onClick={handleUpload}
                 disabled={isUploading}
               >
                 {isUploading ? "Updating..." : "Update avatar"}
               </Button>
-            </DialogFooter>
+            </div>
           </div>
         )}
 
         {error ? (
-          <p className="text-sm text-destructive" role="alert">
+          <p className="text-sm text-[var(--danger)]" role="alert">
             {error}
           </p>
         ) : null}
