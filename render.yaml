@@ -1,8 +1,8 @@
 # Render blueprint: NestJS API + Postgres
 # https://render.com/docs/blueprint-spec
 #
-# Secrets (BETTER_AUTH_SECRET, S3 keys) are sync: false — set them in the dashboard.
-# Create the S3 bucket before the first deploy. Set WEB_URL and BETTER_AUTH_URL
+# Secrets (BETTER_AUTH_SECRET, Cloudinary keys) are sync: false — set them in the dashboard.
+# Create the Cloudinary account before the first deploy. Set WEB_URL and BETTER_AUTH_URL
 # to the Vercel URL after the frontend is live, then redeploy this service.
 
 databases:
@@ -38,7 +38,13 @@ services:
       - key: DATABASE_SSL_REJECT_UNAUTHORIZED
         value: "false"
       - key: STORAGE_TYPE
-        value: s3
+        value: cloudinary
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
       - key: WEB_URL
         sync: false
       - key: BETTER_AUTH_URL

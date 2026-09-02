@@ -47,6 +47,9 @@ importers:
       better-auth:
         specifier: ^1.6.26
         version: 1.6.26(drizzle-kit@0.31.10)(drizzle-orm@0.45.2(@types/pg@8.21.0)(kysely@0.29.4)(pg@8.23.0))(next@16.3.0(@babel/core@7.29.7)(@types/node@24.13.3)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(pg@8.23.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      cloudinary:
+        specifier: ^2.11.0
+        version: 2.11.0
       drizzle-orm:
         specifier: ^0.45.2
         version: 0.45.2(@types/pg@8.21.0)(kysely@0.29.4)(pg@8.23.0)
@@ -3061,6 +3064,10 @@ packages:
   clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+
+  cloudinary@2.11.0:
+    resolution: {integrity: sha512-o2pAkDDqrzPFE/mn9GCfFjBIGQmPs++Ts6rtkFl4vY528DNHiMovKWjH16HBjeGa9iwI7eAad24aWN2emT0aww==}
+    engines: {node: '>=9'}
 
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
@@ -8590,6 +8597,10 @@ snapshots:
       wrap-ansi: 7.0.0
 
   clone@1.0.4: {}
+
+  cloudinary@2.11.0:
+    dependencies:
+      lodash: 4.18.1
 
   clsx@2.1.1: {}
 
