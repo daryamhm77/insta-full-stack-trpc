@@ -1,0 +1,11 @@
+.git
+.github
+.cursor
+**/.next
+**/.turbo
+**/node_modules
+**/.env
+**/.env.*
+uploads
+apps/web/.next
+apps/docs/.next
