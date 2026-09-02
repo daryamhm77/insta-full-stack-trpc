@@ -26,6 +26,12 @@ coverage
 out/
 build
 dist
+# Render's deploy snapshot skips gitignored files. Keep Nest + tRPC build
+# output so `node dist/main` exists at runtime.
+!apps/api/dist/
+!apps/api/dist/**
+!packages/trpc/dist/
+!packages/trpc/dist/**
 uploads/
 
 

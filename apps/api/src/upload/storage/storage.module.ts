@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { CloudinaryStorageProvider } from './cloudinary-storage.provider';
 import { LocalStorageProvider } from './local-storage.provider';
 import { S3StorageProvider } from './s3-storage.provider';
 import { STORAGE_PROVIDER } from './storage.interface';
@@ -15,6 +16,14 @@ import { STORAGE_PROVIDER } from './storage.interface';
 
         if (storageType === 'local') {
           return new LocalStorageProvider();
+        }
+
+        if (storageType === 'cloudinary') {
+          return new CloudinaryStorageProvider({
+            cloudName: configService.getOrThrow<string>('CLOUDINARY_CLOUD_NAME'),
+            apiKey: configService.getOrThrow<string>('CLOUDINARY_API_KEY'),
+            apiSecret: configService.getOrThrow<string>('CLOUDINARY_API_SECRET'),
+          });
         }
 
         if (storageType === 's3') {
@@ -34,7 +43,7 @@ import { STORAGE_PROVIDER } from './storage.interface';
         }
 
         throw new Error(
-          `Unsupported STORAGE_TYPE "${storageType}". Use "local" or "s3".`,
+          `Unsupported STORAGE_TYPE "${storageType}". Use "local", "cloudinary", or "s3".`,
         );
       },
     },
