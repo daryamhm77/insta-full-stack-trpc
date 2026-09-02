@@ -22,7 +22,7 @@ services:
     rootDir: .
     buildCommand: corepack enable && pnpm install --frozen-lockfile --prod=false && pnpm --filter @repo/trpc build && pnpm --filter api build
     preDeployCommand: pnpm --filter api db:migrate
-    startCommand: pnpm --filter api start:prod
+    startCommand: pnpm --filter @repo/trpc build && pnpm --filter api start:prod
     healthCheckPath: /health
     envVars:
       - key: NODE_VERSION

@@ -245,7 +245,7 @@ Do this **before** Vercel. You can use the dashboard (below) or the `render.yaml
 | Runtime | Node |
 | Build Command | `corepack enable && pnpm install --frozen-lockfile --prod=false && pnpm --filter @repo/trpc build && pnpm --filter api build` |
 | Pre-Deploy Command | `pnpm --filter api db:migrate` |
-| Start Command | `pnpm --filter api start:prod` |
+| Start Command | `pnpm --filter @repo/trpc build && pnpm --filter api start:prod` |
 | Instance type | Free |
 
 3. **Health Check Path**: `/health`
@@ -360,7 +360,7 @@ pnpm dev
 | Photos disappear | `STORAGE_TYPE` is still `local` |
 | Render migrate fails | Pre-deploy command needs `pnpm install --prod=false` so `drizzle-kit` is available |
 | `SSL` / certificate error to Postgres | `DATABASE_SSL=true` and `DATABASE_SSL_REJECT_UNAUTHORIZED=false` |
-| `Cannot find module .../dist/main` | Render omitted `dist/` (gitignored). Push the gitignore fix, or set Start Command to `pnpm --filter @repo/trpc build && pnpm --filter api build && pnpm --filter api start:prod` |
+| `Cannot find module .../dist/main` | Set Start Command to `pnpm --filter @repo/trpc build && pnpm --filter api start:prod` so Nest compiles `dist/` at boot (Render snapshots omit gitignored `dist/`). |
 | Upload works locally, fails on Vercel | Uploads go **directly** to Render (`NEXT_PUBLIC_API_URL`), not through Vercel’s 4.5 MB body limit |
 
 ---
