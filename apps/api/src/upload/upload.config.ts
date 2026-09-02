@@ -6,9 +6,11 @@ import { extname } from 'path';
 import { randomUUID } from 'crypto';
 
 export const generateFilename = (file: Express.Multer.File) => {
-  const name = file.originalname.split('.')[0] ?? 'file';
-  const fileExtName = extname(file.originalname);
-  return `${name}-${Date.now()}-${randomUUID()}${fileExtName}`;
+  const name = (file.originalname.split('.')[0] ?? 'file')
+    .replace(/[^a-zA-Z0-9_-]/g, '')
+    .slice(0, 40);
+  const fileExtName = extname(file.originalname).toLowerCase();
+  return `${name || 'file'}-${Date.now()}-${randomUUID()}${fileExtName}`;
 };
 
 const imageFileFilter = (

@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { AppContext } from './app.context';
 import { AuthTrpcMiddleware } from './auth/auth-trpc.middleware';
 import { createAuth } from './auth/create-auth';
+import { parseOrigins } from './config/origins';
 import { DATABASE_CONNECTION } from './db/database-connection';
 import { DatabaseModule } from './db/database.module';
 import { PostsModule } from './posts/posts.module';
@@ -35,13 +36,15 @@ import { StoriesModule } from './stories/stories.module';
         database: NodePgDatabase<typeof schema>,
         configService: ConfigService,
       ) => {
-        const webUrl = configService.get<string>('WEB_URL');
+        const webOrigins = parseOrigins(configService.get<string>('WEB_URL'));
 
         return {
           auth: createAuth(database, {
-            baseURL: configService.getOrThrow<string>('BETTER_AUTH_URL'),
+            baseURL: configService
+              .getOrThrow<string>('BETTER_AUTH_URL')
+              .replace(/\/$/, ''),
             secret: configService.getOrThrow<string>('BETTER_AUTH_SECRET'),
-            trustedOrigins: webUrl ? [webUrl] : undefined,
+            trustedOrigins: webOrigins.length > 0 ? webOrigins : undefined,
           }),
         };
       },
