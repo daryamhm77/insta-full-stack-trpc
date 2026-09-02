@@ -232,23 +232,31 @@ Do this **before** Vercel. You can use the dashboard (below) or the `render.yaml
 4. Create. Wait until status is **Available**.
 5. Open the database → **Connections** → copy the **External Database URL** (`postgresql://...`).
 
-### 2.2 NestJS web service
+### 2.2 NestJS web service (Docker)
 
-1. **New** → **Web Service** → connect the GitHub repo.
-2. Settings:
+The free Node runtime is too small to compile Nest at boot, and it also drops the `dist/` folder after the build step. Use **Docker** so compile happens in the image.
+
+1. Push the repo (it includes a root `Dockerfile`).
+2. Open your existing web service → **Settings**.
+3. **Build & Deploy** (or **Environment**):
+   - Language / Runtime: **Docker**
+   - Dockerfile path: `Dockerfile`
+   - Docker build context directory: `.` (repo root)
+4. Remove the old **Build Command** and **Start Command** (Docker uses the Dockerfile instead).
+5. Keep **Health Check Path**: `/health`
+6. Keep the same env vars as below.
+7. **Save** → **Manual Deploy**.
+
+If you cannot switch the existing service to Docker: **New** → **Web Service** → same repo → **Docker**, then delete the old Node service.
 
 | Field | Value |
 |--------|--------|
 | Name | `insta-api` |
 | Region | same as Postgres |
-| Root Directory | leave empty (repo root) |
-| Runtime | Node |
-| Build Command | `corepack enable && pnpm install --frozen-lockfile --prod=false && pnpm --filter @repo/trpc build && pnpm --filter api build` |
-| Pre-Deploy Command | `pnpm --filter api db:migrate` |
-| Start Command | `pnpm --filter @repo/trpc build && pnpm --filter api start:prod` |
+| Runtime | Docker |
+| Dockerfile path | `Dockerfile` |
 | Instance type | Free |
 
-3. **Health Check Path**: `/health`
 4. Environment variables:
 
 | Key | Value |
@@ -360,7 +368,7 @@ pnpm dev
 | Photos disappear | `STORAGE_TYPE` is still `local` |
 | Render migrate fails | Pre-deploy command needs `pnpm install --prod=false` so `drizzle-kit` is available |
 | `SSL` / certificate error to Postgres | `DATABASE_SSL=true` and `DATABASE_SSL_REJECT_UNAUTHORIZED=false` |
-| `Cannot find module .../dist/main` | Set Start Command to `pnpm --filter @repo/trpc build && pnpm --filter api start:prod` so Nest compiles `dist/` at boot (Render snapshots omit gitignored `dist/`). |
+| `Cannot find module .../dist/main` or heap out of memory | Use the **Docker** runtime (see section 2.2). Do not run `nest build` in the Start Command on a free instance. |
 | Upload works locally, fails on Vercel | Uploads go **directly** to Render (`NEXT_PUBLIC_API_URL`), not through Vercel’s 4.5 MB body limit |
 
 ---
