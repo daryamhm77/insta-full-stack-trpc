@@ -1,0 +1,61 @@
+# Render blueprint: NestJS API + Postgres
+# https://render.com/docs/blueprint-spec
+#
+# Secrets (BETTER_AUTH_SECRET, S3 keys) are sync: false — set them in the dashboard.
+# Create the S3 bucket before the first deploy. Set WEB_URL and BETTER_AUTH_URL
+# to the Vercel URL after the frontend is live, then redeploy this service.
+
+databases:
+  - name: insta-postgres
+    plan: free
+    region: oregon
+    postgresMajorVersion: "16"
+    databaseName: insta
+    user: insta
+
+services:
+  - type: web
+    name: insta-api
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: .
+    buildCommand: corepack enable && pnpm install --frozen-lockfile --prod=false && pnpm --filter @repo/trpc build && pnpm --filter api build
+    preDeployCommand: pnpm --filter api db:migrate
+    startCommand: pnpm --filter api start:prod
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: insta-postgres
+          property: connectionString
+      - key: DATABASE_SSL
+        value: "true"
+      - key: DATABASE_SSL_REJECT_UNAUTHORIZED
+        value: "false"
+      - key: STORAGE_TYPE
+        value: s3
+      - key: WEB_URL
+        sync: false
+      - key: BETTER_AUTH_URL
+        sync: false
+      - key: BETTER_AUTH_SECRET
+        sync: false
+      - key: S3_BUCKET
+        sync: false
+      - key: S3_REGION
+        sync: false
+      - key: S3_ACCESS_KEY_ID
+        sync: false
+      - key: S3_SECRET_ACCESS_KEY
+        sync: false
+      - key: S3_PUBLIC_URL
+        sync: false
+      - key: S3_ENDPOINT
+        sync: false
+      - key: S3_FORCE_PATH_STYLE
+        sync: false

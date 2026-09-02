@@ -11,6 +11,7 @@ const nextConfig = {
     root: monorepoRoot,
   },
   outputFileTracingRoot: monorepoRoot,
+  // API_URL is read at build time. After the Render URL exists, set it on Vercel and redeploy.
   async rewrites() {
     return [
       {

@@ -2,6 +2,8 @@
 
 An Instagram-style social feed built as a TypeScript monorepo. Users can sign up, log in, upload photos, browse a feed, and like posts — with end-to-end type safety from the database to the UI.
 
+**Deploy:** UI on Vercel, NestJS + Postgres on Render, photos on S3/R2. Full steps: [DEPLOY.md](./DEPLOY.md).
+
 ## Project structure
 
 ```

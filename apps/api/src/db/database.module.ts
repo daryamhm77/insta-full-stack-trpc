@@ -19,10 +19,13 @@ export type Database = NodePgDatabase<typeof schema>;
         // Fotosnap's version loads an AWS RDS CA .pem in production —
         // only needed if your host requires a custom certificate authority.
         const useSsl = configService.get<string>('DATABASE_SSL') === 'true';
+        const rejectUnauthorized =
+          configService.get<string>('DATABASE_SSL_REJECT_UNAUTHORIZED') !==
+          'false';
 
         const pool = new Pool({
           connectionString: configService.getOrThrow<string>('DATABASE_URL'),
-          ssl: useSsl ? { rejectUnauthorized: true } : undefined,
+          ssl: useSsl ? { rejectUnauthorized } : undefined,
         });
 
         return drizzle(pool, { schema });
