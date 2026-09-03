@@ -56,7 +56,7 @@ export class UsersRouter {
   }
 
   @Query({ input: searchUsersSchema, output: z.array(userProfileSchema) })
-  searchUsers(@Input() input: SearchUsersInput, @Ctx() context: AppContext) {
+  searchUsers(@Ctx() context: AppContext, @Input() input: SearchUsersInput) {
     return this.usersService.searchUsers(input.query, context.user.id);
   }
 

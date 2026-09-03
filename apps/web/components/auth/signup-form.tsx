@@ -20,6 +20,7 @@ import {
   AuthGoogleButton,
   AuthPrimaryButton,
   PasswordStrengthHint,
+  PasswordVisibilityToggle,
   authInputClassName,
   authLabelClassName,
 } from "@/components/auth/auth-ui";
@@ -31,6 +32,8 @@ interface SignupFormProps {
 
 export default function SignupForm({ onSubmit }: SignupFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const form = useForm<SignUpSchemaType>({
     resolver: zodResolver(SignUpSchema),
@@ -118,14 +121,19 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
               <FormControl>
                 <div className="relative">
                   <Input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     autoComplete="new-password"
                     placeholder="Create a password"
                     disabled={isSubmitting}
-                    className={cn(authInputClassName, "pr-24")}
+                    className={cn(authInputClassName, "pr-28")}
                     {...field}
                   />
                   <PasswordStrengthHint password={passwordValue} />
+                  <PasswordVisibilityToggle
+                    visible={showPassword}
+                    disabled={isSubmitting}
+                    onToggle={() => setShowPassword((prev) => !prev)}
+                  />
                 </div>
               </FormControl>
               <FormMessage />
@@ -142,14 +150,21 @@ export default function SignupForm({ onSubmit }: SignupFormProps) {
                 Confirm Password
               </FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  autoComplete="new-password"
-                  placeholder="Repeat your password"
-                  disabled={isSubmitting}
-                  className={authInputClassName}
-                  {...field}
-                />
+                <div className="relative">
+                  <Input
+                    type={showConfirmPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    placeholder="Repeat your password"
+                    disabled={isSubmitting}
+                    className={cn(authInputClassName, "pr-11")}
+                    {...field}
+                  />
+                  <PasswordVisibilityToggle
+                    visible={showConfirmPassword}
+                    disabled={isSubmitting}
+                    onToggle={() => setShowConfirmPassword((prev) => !prev)}
+                  />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

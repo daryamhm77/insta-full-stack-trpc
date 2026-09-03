@@ -19,9 +19,11 @@ import {
   AuthDivider,
   AuthGoogleButton,
   AuthPrimaryButton,
+  PasswordVisibilityToggle,
   authInputClassName,
   authLabelClassName,
 } from "@/components/auth/auth-ui";
+import { cn } from "@/lib/utils";
 
 interface LoginFormsProps {
   onSubmit: (
@@ -32,6 +34,7 @@ interface LoginFormsProps {
 
 export default function LoginForm({ onSubmit }: LoginFormsProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<LogInSchemaType>({
     resolver: zodResolver(LogInSchema),
@@ -92,14 +95,21 @@ export default function LoginForm({ onSubmit }: LoginFormsProps) {
             <FormItem className="gap-1.5">
               <FormLabel className={authLabelClassName}>Password</FormLabel>
               <FormControl>
-                <Input
-                  type="password"
-                  autoComplete="current-password"
-                  placeholder="Your password"
-                  disabled={isSubmitting}
-                  className={authInputClassName}
-                  {...field}
-                />
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="current-password"
+                    placeholder="Your password"
+                    disabled={isSubmitting}
+                    className={cn(authInputClassName, "pr-11")}
+                    {...field}
+                  />
+                  <PasswordVisibilityToggle
+                    visible={showPassword}
+                    disabled={isSubmitting}
+                    onToggle={() => setShowPassword((prev) => !prev)}
+                  />
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

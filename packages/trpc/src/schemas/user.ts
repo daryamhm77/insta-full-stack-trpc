@@ -5,7 +5,7 @@ export const userIdSchema = z.object({
 });
 
 export const searchUsersSchema = z.object({
-  query: z.string().trim().min(1).max(50),
+  query: z.string().min(1).max(50),
 });
 
 export const updateProfileSchema = z.object({

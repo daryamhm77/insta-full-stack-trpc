@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { and, eq, ilike, ne, notInArray, sql } from 'drizzle-orm';
+import { and, eq, ilike, ne, notInArray, or, sql } from 'drizzle-orm';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import type { UpdateProfileInput, UserProfile } from '@repo/trpc/schemas';
 import { DATABASE_CONNECTION } from '../../db/database-connection';
@@ -141,16 +141,29 @@ export class UsersService {
   }
 
   async searchUsers(query: string, currentUserId: string) {
-    const trimmed = query.trim().replace(/[%_]/g, ' ');
+    const trimmed = query.trim().replace(/[%_]/g, ' ').replace(/\s+/g, ' ');
     if (!trimmed) {
       return [];
     }
 
-    return this.database
+    const pattern = `%${trimmed}%`;
+    const rows = await this.database
       .select(this.profileSelect(currentUserId))
       .from(user)
-      .where(ilike(user.name, `%${trimmed}%`))
+      .where(or(ilike(user.name, pattern), ilike(user.email, pattern)))
       .limit(12);
+
+    return rows.map((row) => ({
+      id: row.id,
+      name: row.name,
+      bio: row.bio ?? null,
+      website: row.website ?? null,
+      image: row.image ?? null,
+      followerCount: Number(row.followerCount ?? 0),
+      followingCount: Number(row.followingCount ?? 0),
+      postCount: Number(row.postCount ?? 0),
+      isFollowing: Boolean(row.isFollowing),
+    }));
   }
 
   async getUserProfile(

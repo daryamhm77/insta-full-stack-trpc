@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Eye, EyeOff } from "lucide-react";
 
 export function AuthDivider() {
   return (
@@ -137,7 +138,7 @@ export function PasswordStrengthHint({ password }: { password: string }) {
   }[strength];
 
   return (
-    <div className="pointer-events-none absolute top-1/2 right-3 flex -translate-y-1/2 items-center gap-1.5">
+    <div className="pointer-events-none absolute top-1/2 right-11 flex -translate-y-1/2 items-center gap-1.5">
       <div className="flex gap-0.5">
         {[0, 1, 2].map((index) => (
           <span
@@ -153,5 +154,32 @@ export function PasswordStrengthHint({ password }: { password: string }) {
         {config.label}
       </span>
     </div>
+  );
+}
+
+export function PasswordVisibilityToggle({
+  visible,
+  onToggle,
+  disabled,
+}: {
+  visible: boolean;
+  onToggle: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      tabIndex={-1}
+      disabled={disabled}
+      onClick={onToggle}
+      aria-label={visible ? "Hide password" : "Show password"}
+      className="absolute top-1/2 right-3 flex size-8 -translate-y-1/2 items-center justify-center rounded-lg text-[#8a6e66] transition-colors hover:bg-[#a76d60]/10 hover:text-[#2f201c] disabled:opacity-50 dark:text-[#a89082] dark:hover:bg-[#e0d0c1]/10 dark:hover:text-[#e0d0c1]"
+    >
+      {visible ? (
+        <EyeOff className="size-4" aria-hidden />
+      ) : (
+        <Eye className="size-4" aria-hidden />
+      )}
+    </button>
   );
 }
