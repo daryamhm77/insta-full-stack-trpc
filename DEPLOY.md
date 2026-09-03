@@ -285,11 +285,10 @@ Free web services **sleep after ~15 minutes**. The first request after sleep can
 
 If you prefer GitOps, connect the repo as a [Blueprint](https://render.com/docs/infrastructure-as-code): Render Dashboard → **New** → **Blueprint** → pick this repo → branch `main`. Render reads `render.yaml` at the repo root and creates both `insta-postgres` and `insta-api`.
 
-Render prompts for every `sync: false` key at apply time. Have these ready:
+Render prompts for every `sync: false` key at apply time (`CLOUDINARY_CLOUD_NAME` is hard-coded in `render.yaml` — it is not a secret). Have these ready:
 
 | Key | Where it comes from | Example |
 |-----|--------------------|---------|
-| `CLOUDINARY_CLOUD_NAME` | Cloudinary dashboard | `dxxxxxxx` |
 | `CLOUDINARY_API_KEY` | Cloudinary dashboard | `123456789012345` |
 | `CLOUDINARY_API_SECRET` | Cloudinary dashboard | `abcDEF...` |
 | `WEB_URL` | Vercel production origin, no trailing slash (comma-separated if several) | `https://insta.vercel.app` |
