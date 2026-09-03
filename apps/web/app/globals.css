@@ -237,8 +237,10 @@ a {
   .post-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 14px 16px 6px;
+    gap: 4px;
+    /* 8px inset + the button's own 8px padding lines the icons up with the
+       16px text gutter below */
+    padding: 12px 8px 4px;
   }
 
   .post-action {
