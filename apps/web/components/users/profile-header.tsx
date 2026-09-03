@@ -33,8 +33,8 @@ export default function ProfileHeader({
   const avatarUrl = getImageUrl(profile.image || "");
 
   return (
-    <div className="mb-8 pl-2">
-      <div className="flex flex-col items-start gap-8 md:flex-row md:items-center">
+    <div className="mb-8">
+      <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-center sm:gap-10">
         <div className="shrink-0">
           {avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -50,10 +50,10 @@ export default function ProfileHeader({
           )}
         </div>
 
-        <div className="flex-1 space-y-4">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <div className="flex min-w-0 flex-1 flex-col items-center justify-center gap-3 text-center sm:items-start sm:text-left">
+          <div className="flex items-center justify-center gap-3 sm:justify-start">
             <h1 className="text-2xl font-normal">{profile.name}</h1>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
               {!isOwnProfile && (
                 <Button
                   type="button"
@@ -86,27 +86,27 @@ export default function ProfileHeader({
             </div>
           </div>
 
-          <div className="flex gap-8 text-sm">
-            <div>
-              <span className="font-semibold">{profile.postCount}</span>{" "}
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm sm:justify-start">
+            <div className="inline-flex items-center gap-1">
+              <span className="font-semibold">{profile.postCount}</span>
               <span className="text-muted-foreground">posts</span>
             </div>
             <Button
               type="button"
               variant="ghost"
               onClick={onOpenFollowers}
-              className="h-auto p-0"
+              className="inline-flex h-auto min-h-0 items-center gap-1 p-0 text-sm font-normal hover:bg-transparent"
             >
-              <span className="font-semibold">{profile.followerCount}</span>{" "}
+              <span className="font-semibold">{profile.followerCount}</span>
               <span className="text-muted-foreground">followers</span>
             </Button>
             <Button
               type="button"
               variant="ghost"
               onClick={onOpenFollowing}
-              className="h-auto p-0"
+              className="inline-flex h-auto min-h-0 items-center gap-1 p-0 text-sm font-normal hover:bg-transparent"
             >
-              <span className="font-semibold">{profile.followingCount}</span>{" "}
+              <span className="font-semibold">{profile.followingCount}</span>
               <span className="text-muted-foreground">following</span>
             </Button>
           </div>
@@ -120,7 +120,7 @@ export default function ProfileHeader({
                 href={profile.website}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-1 text-sm text-primary hover:underline"
+                className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
               >
                 <Globe className="size-3" />
                 {profile.website}

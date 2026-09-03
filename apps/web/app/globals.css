@@ -79,30 +79,38 @@ a {
 }
 
 :root {
-  --bg-primary: #f4faff;
-  --bg-secondary: #e8f4fc;
-  --bg-card: #ffffff;
-  --bg-card-soft: #f0f7fc;
+  --redwood: #a76d60;
+  --redwood-deep: #7a4e44;
+  --redwood-ink: #2f201c;
+  --almond: #e0d0c1;
+  --almond-soft: #f3e9df;
+  --almond-bright: #f7f1ea;
 
-  --ice-50: #f0f9ff;
-  --ice-100: #dff4ff;
-  --ice-200: #bfe8ff;
-  --ice-300: #91d8ff;
-  --ice-400: #67c7f5;
-  --ice-500: #42b8ed;
+  --bg-primary: #e0d0c1;
+  --bg-secondary: #f3e9df;
+  --bg-card: #f7f1ea;
+  --bg-card-soft: #ede0d3;
 
-  --text-primary: #0b1a2a;
-  --text-secondary: #3d5568;
-  --text-muted: #6b8296;
+  /* Warm accent scale (kept as --ice-* so existing class names keep working) */
+  --ice-50: #f7f1ea;
+  --ice-100: #ede0d3;
+  --ice-200: #e0d0c1;
+  --ice-300: #c9a79a;
+  --ice-400: #a76d60;
+  --ice-500: #8b574c;
 
-  --border-soft: rgba(66, 184, 237, 0.18);
-  --border-medium: rgba(66, 184, 237, 0.3);
+  --text-primary: #2f201c;
+  --text-secondary: #6b4e47;
+  --text-muted: #8a6e66;
 
-  --shadow-soft: 0 10px 30px rgba(8, 40, 70, 0.08);
-  --shadow-ice: 0 8px 30px rgba(66, 184, 237, 0.12);
+  --border-soft: rgba(167, 109, 96, 0.22);
+  --border-medium: rgba(167, 109, 96, 0.36);
 
-  --danger: #ff6b7a;
-  --success: #72dfb0;
+  --shadow-soft: 0 10px 30px rgba(47, 32, 28, 0.08);
+  --shadow-ice: 0 8px 30px rgba(167, 109, 96, 0.18);
+
+  --danger: #c45c5c;
+  --success: #6b9a78;
 
   --background: var(--bg-primary);
   --foreground: var(--text-primary);
@@ -110,59 +118,59 @@ a {
   --card-foreground: var(--text-primary);
   --popover: var(--bg-card);
   --popover-foreground: var(--text-primary);
-  --primary: #1f6f99;
-  --primary-foreground: #f4faff;
+  --primary: #a76d60;
+  --primary-foreground: #f7f1ea;
   --secondary: var(--bg-secondary);
   --secondary-foreground: var(--text-primary);
   --muted: var(--bg-card-soft);
   --muted-foreground: var(--text-muted);
-  --accent: var(--ice-100);
+  --accent: #ede0d3;
   --accent-foreground: var(--text-primary);
   --destructive: var(--danger);
   --border: var(--border-soft);
-  --input: rgba(66, 184, 237, 0.22);
-  --ring: var(--ice-400);
-  --chart-1: var(--ice-500);
-  --chart-2: var(--ice-400);
-  --chart-3: var(--ice-300);
-  --chart-4: #8298aa;
-  --chart-5: #102238;
+  --input: rgba(167, 109, 96, 0.24);
+  --ring: #a76d60;
+  --chart-1: #a76d60;
+  --chart-2: #c9a79a;
+  --chart-3: #e0d0c1;
+  --chart-4: #8a6e66;
+  --chart-5: #2f201c;
   --radius: 0.75rem;
   --sidebar: var(--bg-card);
   --sidebar-foreground: var(--text-primary);
-  --sidebar-primary: var(--ice-500);
-  --sidebar-primary-foreground: #08111f;
-  --sidebar-accent: var(--ice-100);
+  --sidebar-primary: #a76d60;
+  --sidebar-primary-foreground: #f7f1ea;
+  --sidebar-accent: #ede0d3;
   --sidebar-accent-foreground: var(--text-primary);
   --sidebar-border: var(--border-soft);
-  --sidebar-ring: var(--ice-400);
+  --sidebar-ring: #a76d60;
 }
 
 .dark {
-  --bg-primary: #08111f;
-  --bg-secondary: #0d1a2b;
-  --bg-card: #102238;
-  --bg-card-soft: #13283e;
+  --bg-primary: #2f201c;
+  --bg-secondary: #3a2823;
+  --bg-card: #46312b;
+  --bg-card-soft: #523a33;
 
-  --ice-50: #f0f9ff;
-  --ice-100: #dff4ff;
-  --ice-200: #bfe8ff;
-  --ice-300: #91d8ff;
-  --ice-400: #67c7f5;
-  --ice-500: #42b8ed;
+  --ice-50: #f7f1ea;
+  --ice-100: #e0d0c1;
+  --ice-200: #c9b5a3;
+  --ice-300: #c48b7d;
+  --ice-400: #a76d60;
+  --ice-500: #8b574c;
 
-  --text-primary: #f4faff;
-  --text-secondary: #b7c9d8;
-  --text-muted: #8298aa;
+  --text-primary: #e0d0c1;
+  --text-secondary: #c9b5a3;
+  --text-muted: #a89082;
 
-  --border-soft: rgba(145, 216, 255, 0.16);
-  --border-medium: rgba(145, 216, 255, 0.28);
+  --border-soft: rgba(224, 208, 193, 0.16);
+  --border-medium: rgba(224, 208, 193, 0.28);
 
-  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.22);
-  --shadow-ice: 0 8px 30px rgba(66, 184, 237, 0.1);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.28);
+  --shadow-ice: 0 8px 30px rgba(167, 109, 96, 0.16);
 
-  --danger: #ff6b7a;
-  --success: #72dfb0;
+  --danger: #e07a7a;
+  --success: #7eb08a;
 
   --background: var(--bg-primary);
   --foreground: var(--text-primary);
@@ -170,31 +178,31 @@ a {
   --card-foreground: var(--text-primary);
   --popover: var(--bg-card-soft);
   --popover-foreground: var(--text-primary);
-  --primary: var(--ice-300);
-  --primary-foreground: #08111f;
+  --primary: #e0d0c1;
+  --primary-foreground: #2f201c;
   --secondary: var(--bg-secondary);
   --secondary-foreground: var(--text-primary);
   --muted: var(--bg-card-soft);
   --muted-foreground: var(--text-muted);
-  --accent: rgba(103, 199, 245, 0.12);
-  --accent-foreground: var(--ice-100);
+  --accent: rgba(167, 109, 96, 0.28);
+  --accent-foreground: #e0d0c1;
   --destructive: var(--danger);
   --border: var(--border-soft);
-  --input: rgba(145, 216, 255, 0.18);
-  --ring: var(--ice-400);
-  --chart-1: var(--ice-500);
-  --chart-2: var(--ice-400);
-  --chart-3: var(--ice-300);
+  --input: rgba(224, 208, 193, 0.18);
+  --ring: #c9a79a;
+  --chart-1: #a76d60;
+  --chart-2: #c48b7d;
+  --chart-3: #e0d0c1;
   --chart-4: var(--text-muted);
-  --chart-5: var(--ice-200);
+  --chart-5: #c9b5a3;
   --sidebar: var(--bg-card);
   --sidebar-foreground: var(--text-primary);
-  --sidebar-primary: var(--ice-400);
-  --sidebar-primary-foreground: #08111f;
-  --sidebar-accent: rgba(103, 199, 245, 0.12);
-  --sidebar-accent-foreground: var(--ice-100);
+  --sidebar-primary: #e0d0c1;
+  --sidebar-primary-foreground: #2f201c;
+  --sidebar-accent: rgba(167, 109, 96, 0.28);
+  --sidebar-accent-foreground: #e0d0c1;
   --sidebar-border: var(--border-soft);
-  --sidebar-ring: var(--ice-400);
+  --sidebar-ring: #c9a79a;
 }
 
 @layer base {
@@ -204,9 +212,14 @@ a {
   body {
     @apply bg-background text-foreground antialiased;
     background-image:
-      radial-gradient(ellipse at top, rgba(66, 184, 237, 0.08), transparent 50%),
-      radial-gradient(ellipse at bottom right, rgba(145, 216, 255, 0.05), transparent 45%);
+      radial-gradient(ellipse at top, rgba(167, 109, 96, 0.14), transparent 52%),
+      radial-gradient(ellipse at bottom right, rgba(224, 208, 193, 0.2), transparent 48%);
     background-attachment: fixed;
+  }
+  .dark body {
+    background-image:
+      radial-gradient(ellipse at top, rgba(167, 109, 96, 0.22), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(224, 208, 193, 0.06), transparent 45%);
   }
   html {
     @apply font-sans;
@@ -222,7 +235,7 @@ a {
   }
 
   .post-card {
-    background: rgba(16, 34, 56, 0.78);
+    background: color-mix(in srgb, var(--bg-card) 92%, transparent);
     border: 1px solid var(--border-soft);
     border-radius: 16px;
     box-shadow: var(--shadow-soft);
@@ -231,25 +244,24 @@ a {
   }
 
   :root:not(.dark) .post-card {
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(247, 241, 234, 0.96);
   }
 
   .post-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 14px 16px 6px;
+    gap: 16px;
+    padding: 12px 16px 8px;
   }
 
   .post-action {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    min-width: 40px;
-    min-height: 40px;
-    padding: 8px;
-    border-radius: 10px;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 8px;
     color: var(--text-secondary);
     transition:
       background-color 160ms ease,
@@ -261,26 +273,26 @@ a {
   }
 
   .post-action:hover {
-    background: rgba(103, 199, 245, 0.1);
-    color: var(--ice-200);
+    background: rgba(167, 109, 96, 0.12);
+    color: var(--ice-400);
   }
 
   .create-post-modal {
     width: min(520px, calc(100vw - 32px));
     background: linear-gradient(
       180deg,
-      rgba(19, 40, 62, 0.96),
-      rgba(10, 24, 39, 0.98)
+      rgba(70, 49, 43, 0.98),
+      rgba(47, 32, 28, 0.99)
     );
     border: 1px solid var(--border-medium);
     border-radius: 18px;
     box-shadow:
-      0 24px 80px rgba(0, 0, 0, 0.45),
-      0 0 40px rgba(66, 184, 237, 0.08);
+      0 24px 80px rgba(47, 32, 28, 0.35),
+      0 0 40px rgba(167, 109, 96, 0.1);
   }
 
   :root:not(.dark) .create-post-modal {
-    background: linear-gradient(180deg, #ffffff, #f4faff);
+    background: linear-gradient(180deg, #f7f1ea, #e0d0c1);
   }
 
   .upload-zone {
@@ -294,7 +306,7 @@ a {
     padding: 24px;
     border-radius: 14px;
     border: 1px dashed var(--border-medium);
-    background: rgba(103, 199, 245, 0.04);
+    background: rgba(167, 109, 96, 0.06);
     transition:
       border-color 160ms ease,
       background 160ms ease;
@@ -302,8 +314,8 @@ a {
 
   .upload-zone:hover,
   .upload-zone[data-dragging="true"] {
-    border-color: rgba(145, 216, 255, 0.5);
-    background: rgba(103, 199, 245, 0.1);
+    border-color: rgba(167, 109, 96, 0.5);
+    background: rgba(167, 109, 96, 0.12);
   }
 
   .image-preview {
@@ -330,14 +342,14 @@ a {
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    background: rgba(8, 17, 31, 0.72);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(47, 32, 28, 0.72);
+    border: 1px solid rgba(224, 208, 193, 0.2);
     color: var(--text-primary);
     transition: background 160ms ease;
   }
 
   .remove-image-button:hover {
-    background: rgba(8, 17, 31, 0.9);
+    background: rgba(47, 32, 28, 0.9);
   }
 
   .modal-footer {
@@ -377,7 +389,7 @@ a {
   }
 
   .modal-button-secondary:hover {
-    background: rgba(103, 199, 245, 0.08);
+    background: rgba(167, 109, 96, 0.1);
     color: var(--text-primary);
   }
 
@@ -385,15 +397,15 @@ a {
     border: 1px solid var(--border-medium);
     background: linear-gradient(
       180deg,
-      rgba(191, 232, 255, 0.22),
-      rgba(103, 199, 245, 0.14)
+      rgba(224, 208, 193, 0.35),
+      rgba(167, 109, 96, 0.22)
     );
     color: var(--text-primary);
     box-shadow: var(--shadow-ice);
   }
 
   .modal-button-primary:hover {
-    background: rgba(103, 199, 245, 0.22);
+    background: rgba(167, 109, 96, 0.28);
   }
 
   .story-item {
@@ -415,7 +427,7 @@ a {
   }
 
   .story-ring-muted {
-    background: rgba(145, 216, 255, 0.22);
+    background: rgba(167, 109, 96, 0.28);
   }
 
   .caption-input {
@@ -423,7 +435,7 @@ a {
     resize: none;
     border-radius: 12px;
     border: 1px solid var(--border-soft);
-    background: rgba(8, 17, 31, 0.28);
+    background: rgba(47, 32, 28, 0.28);
     padding: 12px 14px;
     color: var(--text-primary);
     outline: none;
@@ -433,7 +445,7 @@ a {
   }
 
   :root:not(.dark) .caption-input {
-    background: rgba(240, 249, 255, 0.8);
+    background: rgba(247, 241, 234, 0.9);
   }
 
   .caption-input::placeholder {
@@ -442,7 +454,7 @@ a {
 
   .caption-input:focus {
     border-color: var(--ice-400);
-    box-shadow: 0 0 0 3px rgba(103, 199, 245, 0.1);
+    box-shadow: 0 0 0 3px rgba(167, 109, 96, 0.16);
   }
 }
 
@@ -457,8 +469,8 @@ a {
   border: 1px solid var(--border-medium);
   background: linear-gradient(
     180deg,
-    rgba(191, 232, 255, 0.16),
-    rgba(103, 199, 245, 0.08)
+    rgba(224, 208, 193, 0.35),
+    rgba(167, 109, 96, 0.16)
   );
   color: var(--text-primary);
   box-shadow: var(--shadow-ice);
@@ -483,8 +495,8 @@ a {
 
 .new-post-button:hover {
   transform: translateY(-1px);
-  border-color: rgba(145, 216, 255, 0.42);
-  background: rgba(103, 199, 245, 0.14);
+  border-color: rgba(167, 109, 96, 0.5);
+  background: rgba(167, 109, 96, 0.2);
 }
 
 .follow-button {
@@ -497,8 +509,8 @@ a {
   margin-right: 8px;
   border-radius: 10px;
   border: 1px solid var(--border-medium);
-  background: rgba(103, 199, 245, 0.1);
-  color: var(--ice-200);
+  background: rgba(167, 109, 96, 0.14);
+  color: var(--text-primary);
   font-size: 0.875rem;
   font-weight: 600;
   line-height: 1;
@@ -508,8 +520,8 @@ a {
 }
 
 .follow-button:hover {
-  background: rgba(103, 199, 245, 0.18);
-  border-color: rgba(145, 216, 255, 0.42);
+  background: rgba(167, 109, 96, 0.24);
+  border-color: rgba(167, 109, 96, 0.5);
 }
 
 .follow-button:disabled {

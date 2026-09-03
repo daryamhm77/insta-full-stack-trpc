@@ -40,9 +40,9 @@ export default function LoginPage() {
           Sign in to your Insta account to keep sharing with your community.{" "}
           <Link
             href="/signup"
-            className="font-medium text-zinc-800 underline-offset-4 hover:underline"
+            className="font-semibold text-[#a76d60] underline underline-offset-4 dark:text-[#e0d0c1]"
           >
-            Create one
+            Sign up
           </Link>
         </>
       }

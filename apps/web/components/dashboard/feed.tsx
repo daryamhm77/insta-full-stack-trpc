@@ -135,7 +135,7 @@ export default function Feed({
 
             <div className="space-y-2 px-4 pb-4">
               <p className="text-sm font-semibold text-[var(--text-primary)]">
-                {post.likes} likes
+                {post.likes} {post.likes === 1 ? "like" : "likes"}
               </p>
 
               <p className="text-sm text-[var(--text-primary)]">
