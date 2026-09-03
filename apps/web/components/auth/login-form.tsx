@@ -3,6 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm, type UseFormSetError } from "react-hook-form";
+import Link from "next/link";
 import { LogInSchema, type LogInSchemaType } from "@/lib/auth/schema";
 import {
   Form,
@@ -120,6 +121,13 @@ export default function LoginForm({ onSubmit }: LoginFormsProps) {
             })
           }
         />
+
+        <Link
+          href="/signup"
+          className="flex h-12 w-full items-center justify-center rounded-xl border-2 border-zinc-900 bg-white text-sm font-semibold text-zinc-900 hover:bg-zinc-50"
+        >
+          Sign up
+        </Link>
       </form>
     </Form>
   );

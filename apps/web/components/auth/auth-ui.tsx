@@ -56,10 +56,10 @@ export function AuthGoogleButton({
   return (
     <Button
       type="button"
-      variant="ghost"
+      variant="outline"
       disabled={disabled}
       onClick={onClick}
-      className="h-12 w-full"
+      className="h-12 w-full rounded-xl border-zinc-300 bg-white font-semibold text-zinc-900 hover:bg-zinc-50 hover:text-zinc-900 dark:border-zinc-300 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-50"
     >
       <GoogleIcon />
       {label}
@@ -79,9 +79,9 @@ export function AuthPrimaryButton({
   return (
     <Button
       type={type}
-      variant="ghost"
+      variant="default"
       disabled={disabled}
-      className="mt-2 h-12 w-full"
+      className="mt-2 h-12 w-full rounded-xl bg-zinc-900 font-semibold text-white hover:bg-zinc-800 hover:text-white dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800"
     >
       {children}
     </Button>
