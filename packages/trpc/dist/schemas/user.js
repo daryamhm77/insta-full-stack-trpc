@@ -1,9 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userProfileSchema = exports.updateProfileSchema = exports.userIdSchema = void 0;
+exports.userProfileSchema = exports.updateProfileSchema = exports.searchUsersSchema = exports.userIdSchema = void 0;
 const zod_1 = require("zod");
 exports.userIdSchema = zod_1.z.object({
     userId: zod_1.z.string(),
+});
+exports.searchUsersSchema = zod_1.z.object({
+    query: zod_1.z.string().trim().min(1).max(50),
 });
 exports.updateProfileSchema = zod_1.z.object({
     name: zod_1.z.string().optional(),

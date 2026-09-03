@@ -1,7 +1,7 @@
 "use client";
 
 import type { Post } from "@repo/trpc/schemas";
-import { Heart, MessageCircle, User } from "lucide-react";
+import { Bookmark, Heart, MessageCircle, User } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { getImageUrl } from "@/lib/image";
@@ -12,6 +12,7 @@ interface FeedProps {
   posts: Post[];
   isLoading?: boolean;
   onLikePost: (postId: number) => void;
+  onSavePost: (postId: number) => void;
   onAddComment: (postId: number, text: string) => void;
   onDeleteComment: (commentId: number) => void;
 }
@@ -20,6 +21,7 @@ export default function Feed({
   posts,
   isLoading,
   onLikePost,
+  onSavePost,
   onAddComment,
   onDeleteComment,
 }: FeedProps) {
@@ -129,6 +131,16 @@ export default function Feed({
               >
                 <MessageCircle
                   className={`size-5 ${commentsOpen ? "fill-[var(--ice-400)] text-[var(--ice-400)]" : ""}`}
+                />
+              </button>
+              <button
+                type="button"
+                className="post-action post-action-save"
+                onClick={() => onSavePost(post.id)}
+                aria-label={post.isSaved ? "Unsave" : "Save"}
+              >
+                <Bookmark
+                  className={`size-5 ${post.isSaved ? "fill-[var(--text-primary)] text-[var(--text-primary)]" : ""}`}
                 />
               </button>
             </div>

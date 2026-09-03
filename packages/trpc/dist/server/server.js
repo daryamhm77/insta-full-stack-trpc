@@ -72,6 +72,10 @@ exports.appRouter = (0, exports.router)({
         getSuggestedUsers: exports.publicProcedure
             .output(zod_1.z.array(user_1.userProfileSchema))
             .query(async () => []),
+        searchUsers: exports.publicProcedure
+            .input(user_1.searchUsersSchema)
+            .output(zod_1.z.array(user_1.userProfileSchema))
+            .query(async () => []),
         updateProfile: exports.publicProcedure
             .input(user_1.updateProfileSchema)
             .mutation(async () => undefined),

@@ -2,6 +2,9 @@ import { z } from "zod";
 export declare const userIdSchema: z.ZodObject<{
     userId: z.ZodString;
 }, z.core.$strip>;
+export declare const searchUsersSchema: z.ZodObject<{
+    query: z.ZodString;
+}, z.core.$strip>;
 export declare const updateProfileSchema: z.ZodObject<{
     name: z.ZodOptional<z.ZodString>;
     bio: z.ZodOptional<z.ZodString>;
@@ -19,6 +22,7 @@ export declare const userProfileSchema: z.ZodObject<{
     isFollowing: z.ZodBoolean;
 }, z.core.$strip>;
 export type UserIdInput = z.infer<typeof userIdSchema>;
+export type SearchUsersInput = z.infer<typeof searchUsersSchema>;
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
 export type UserProfile = z.infer<typeof userProfileSchema>;
 //# sourceMappingURL=user.d.ts.map

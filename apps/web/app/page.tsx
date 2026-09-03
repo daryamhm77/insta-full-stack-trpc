@@ -7,6 +7,7 @@ import PhotoUpload from "@/components/dashboard/photo-upload";
 import Sidebar from "@/components/dashboard/sidebar";
 import { Stories } from "@/components/dashboard/stories";
 import { Button } from "@/components/ui/button";
+import { UserSearch } from "@/components/users/user-search";
 import { trpc } from "@/lib/trpc/client";
 import { uploadImage } from "@/lib/image";
 
@@ -40,6 +41,29 @@ export default function Home() {
     },
     onSettled: async () => {
       await utils.posts.findAll.invalidate();
+    },
+  });
+  const savePost = trpc.posts.savePost.useMutation({
+    onMutate: ({ postId }) => {
+      utils.posts.findAll.setData({}, (old) => {
+        if (!old) return old;
+
+        return old.map((post) => {
+          if (post.id === postId) {
+            return {
+              ...post,
+              isSaved: !post.isSaved,
+            };
+          }
+          return post;
+        });
+      });
+    },
+    onSettled: async () => {
+      await Promise.all([
+        utils.posts.findAll.invalidate(),
+        utils.posts.getSavedPosts.invalidate(),
+      ]);
     },
   });
   const createComment = trpc.comments.create.useMutation({
@@ -92,7 +116,7 @@ export default function Home() {
       <div className="mx-auto w-full max-w-[1400px] px-6 py-8 sm:px-8 lg:px-12 xl:px-16">
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1fr)_300px] xl:grid-cols-[minmax(0,1fr)_320px] xl:gap-14">
           <div className="ml-2 min-w-0 space-y-8 sm:ml-4 lg:ml-6">
-            <header className="flex items-center justify-between gap-4">
+            <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-1">
                 <h1 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
                   Feed
@@ -101,15 +125,18 @@ export default function Home() {
                   Latest posts from your community.
                 </p>
               </div>
-              <Button
-                type="button"
-                variant="outline"
-                className="new-post-button"
-                onClick={() => setOpen(true)}
-              >
-                <Plus aria-hidden="true" />
-                New post
-              </Button>
+              <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+                <UserSearch className="w-full sm:w-64" />
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="new-post-button shrink-0"
+                  onClick={() => setOpen(true)}
+                >
+                  <Plus aria-hidden="true" />
+                  New post
+                </Button>
+              </div>
             </header>
 
             <Stories
@@ -121,6 +148,7 @@ export default function Home() {
               posts={postsQuery.data ?? []}
               isLoading={postsQuery.isLoading}
               onLikePost={(postId) => likePost.mutate({ postId })}
+              onSavePost={(postId) => savePost.mutate({ postId })}
               onAddComment={(postId, text) => {
                 createComment.mutate({ postId, text });
               }}

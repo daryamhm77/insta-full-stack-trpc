@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { and, eq, ne, notInArray, sql } from 'drizzle-orm';
+import { and, eq, ilike, ne, notInArray, sql } from 'drizzle-orm';
 import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 import type { UpdateProfileInput, UserProfile } from '@repo/trpc/schemas';
 import { DATABASE_CONNECTION } from '../../db/database-connection';
@@ -138,6 +138,19 @@ export class UsersService {
         ),
       )
       .limit(5);
+  }
+
+  async searchUsers(query: string, currentUserId: string) {
+    const trimmed = query.trim().replace(/[%_]/g, ' ');
+    if (!trimmed) {
+      return [];
+    }
+
+    return this.database
+      .select(this.profileSelect(currentUserId))
+      .from(user)
+      .where(ilike(user.name, `%${trimmed}%`))
+      .limit(12);
   }
 
   async getUserProfile(

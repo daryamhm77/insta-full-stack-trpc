@@ -3,7 +3,7 @@
 import type { Post } from "@repo/trpc/schemas";
 import { Bookmark, Heart, Trash2, User } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { authClient } from "@/lib/auth/auth-client";
 import { getImageUrl } from "@/lib/image";
 import { trpc } from "@/lib/trpc/client";
@@ -25,6 +25,12 @@ export function PostModal({
   const { data: allPosts } = trpc.posts.findAll.useQuery({});
   const post = allPosts?.find((item) => item.id === initialPost.id) || initialPost;
   const [commentText, setCommentText] = useState("");
+  const [isSaved, setIsSaved] = useState(Boolean(initialPost.isSaved));
+
+  useEffect(() => {
+    setIsSaved(Boolean(post.isSaved ?? initialPost.isSaved));
+  }, [post.id, post.isSaved, initialPost.isSaved]);
+
   const { data: comments = [] } = trpc.comments.findByPostId.useQuery({
     postId: post.id,
   });
@@ -57,6 +63,12 @@ export function PostModal({
   });
 
   const savePostMutation = trpc.posts.savePost.useMutation({
+    onMutate: () => {
+      setIsSaved((prev) => !prev);
+    },
+    onError: () => {
+      setIsSaved((prev) => !prev);
+    },
     onSuccess: async () => {
       await utils.posts.findAll.invalidate();
       await utils.posts.getSavedPosts.invalidate();
@@ -245,7 +257,7 @@ export function PostModal({
                   className="h-auto p-0"
                 >
                   <Bookmark
-                    className={`size-6 ${post.isSaved ? "fill-foreground" : ""}`}
+                    className={`size-6 ${isSaved ? "fill-foreground" : ""}`}
                   />
                 </Button>
               </div>

@@ -18,6 +18,7 @@ import {
   storyGroupSchema,
 } from "../schemas/stories";
 import {
+  searchUsersSchema,
   updateProfileSchema,
   userIdSchema,
   userProfileSchema,
@@ -88,6 +89,10 @@ export const appRouter = router({
       .output(z.array(userProfileSchema))
       .query(async () => [] as z.infer<typeof userProfileSchema>[]),
     getSuggestedUsers: publicProcedure
+      .output(z.array(userProfileSchema))
+      .query(async () => [] as z.infer<typeof userProfileSchema>[]),
+    searchUsers: publicProcedure
+      .input(searchUsersSchema)
       .output(z.array(userProfileSchema))
       .query(async () => [] as z.infer<typeof userProfileSchema>[]),
     updateProfile: publicProcedure

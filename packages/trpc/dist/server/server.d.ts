@@ -226,6 +226,23 @@ export declare const appRouter: import("@trpc/server").TRPCBuiltRouter<{
             }[];
             meta: object;
         }>;
+        searchUsers: import("@trpc/server").TRPCQueryProcedure<{
+            input: {
+                query: string;
+            };
+            output: {
+                id: string;
+                name: string;
+                bio: string | null;
+                website: string | null;
+                image: string | null;
+                followerCount: number;
+                followingCount: number;
+                postCount: number;
+                isFollowing: boolean;
+            }[];
+            meta: object;
+        }>;
         updateProfile: import("@trpc/server").TRPCMutationProcedure<{
             input: {
                 name?: string | undefined;
