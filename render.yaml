@@ -1,9 +1,10 @@
-# Render blueprint: NestJS API + Postgres
+# Render blueprint: NestJS API (Docker) + Postgres
 # https://render.com/docs/blueprint-spec
 #
-# Secrets (BETTER_AUTH_SECRET, Cloudinary keys) are sync: false — set them in the dashboard.
-# Create the Cloudinary account before the first deploy. Set WEB_URL and BETTER_AUTH_URL
-# to the Vercel URL after the frontend is live, then redeploy this service.
+# Values marked `sync: false` are NOT stored in git — Render prompts for them when
+# the blueprint is applied, and they must be filled in before the first deploy works.
+# WEB_URL / BETTER_AUTH_URL are the Vercel origin; put a placeholder in first, then
+# update both after the frontend is live and redeploy this service.
 
 databases:
   - name: insta-postgres
@@ -12,21 +13,23 @@ databases:
     postgresMajorVersion: "16"
     databaseName: insta
     user: insta
+    ipAllowList: [] # internal connections only
 
 services:
   - type: web
     name: insta-api
     runtime: docker
     plan: free
-    region: oregon
+    region: oregon # must match the database region
     dockerfilePath: ./Dockerfile
     dockerContext: .
+    autoDeploy: true
     healthCheckPath: /health
     envVars:
-      - key: NODE_VERSION
-        value: "20"
       - key: NODE_ENV
         value: production
+      - key: PORT
+        value: "10000"
       - key: DATABASE_URL
         fromDatabase:
           name: insta-postgres
@@ -37,29 +40,15 @@ services:
         value: "false"
       - key: STORAGE_TYPE
         value: cloudinary
+      - key: BETTER_AUTH_SECRET
+        generateValue: true
+      - key: BETTER_AUTH_URL
+        sync: false
+      - key: WEB_URL
+        sync: false
       - key: CLOUDINARY_CLOUD_NAME
         sync: false
       - key: CLOUDINARY_API_KEY
         sync: false
       - key: CLOUDINARY_API_SECRET
-        sync: false
-      - key: WEB_URL
-        sync: false
-      - key: BETTER_AUTH_URL
-        sync: false
-      - key: BETTER_AUTH_SECRET
-        sync: false
-      - key: S3_BUCKET
-        sync: false
-      - key: S3_REGION
-        sync: false
-      - key: S3_ACCESS_KEY_ID
-        sync: false
-      - key: S3_SECRET_ACCESS_KEY
-        sync: false
-      - key: S3_PUBLIC_URL
-        sync: false
-      - key: S3_ENDPOINT
-        sync: false
-      - key: S3_FORCE_PATH_STYLE
         sync: false
