@@ -46,7 +46,7 @@ export default function SignupPage() {
           account.{" "}
           <Link
             href="/login"
-            className="font-semibold text-zinc-900 underline underline-offset-4"
+            className="font-semibold text-[#a76d60] underline underline-offset-4 dark:text-[#e0d0c1]"
           >
             Log in
           </Link>

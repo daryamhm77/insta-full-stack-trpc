@@ -6,11 +6,11 @@ import { cn } from "@/lib/utils";
 export function AuthDivider() {
   return (
     <div className="relative my-6 flex items-center gap-3">
-      <div className="h-px flex-1 bg-zinc-200" />
-      <span className="text-xs font-medium tracking-wide text-zinc-400 uppercase">
+      <div className="h-px flex-1 bg-[#a76d60]/25 dark:bg-[#e0d0c1]/25" />
+      <span className="text-xs font-medium tracking-wide text-[#8a6e66] uppercase dark:text-[#a89082]">
         OR
       </span>
-      <div className="h-px flex-1 bg-zinc-200" />
+      <div className="h-px flex-1 bg-[#a76d60]/25 dark:bg-[#e0d0c1]/25" />
     </div>
   );
 }
@@ -59,7 +59,7 @@ export function AuthGoogleButton({
       variant="outline"
       disabled={disabled}
       onClick={onClick}
-      className="h-12 w-full rounded-xl border-zinc-300 bg-white font-semibold text-zinc-900 hover:bg-zinc-50 hover:text-zinc-900 dark:border-zinc-300 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-50"
+      className="h-12 w-full rounded-xl border-[#a76d60]/40 bg-[#f7f1ea] font-semibold text-[#2f201c] hover:bg-[#ede0d3] hover:text-[#2f201c] dark:border-[#e0d0c1]/35 dark:bg-[#523a33] dark:text-[#e0d0c1] dark:hover:bg-[#5c433b]"
     >
       <GoogleIcon />
       {label}
@@ -81,7 +81,7 @@ export function AuthPrimaryButton({
       type={type}
       variant="default"
       disabled={disabled}
-      className="mt-2 h-12 w-full rounded-xl bg-zinc-900 font-semibold text-white hover:bg-zinc-800 hover:text-white dark:bg-zinc-900 dark:text-white dark:hover:bg-zinc-800"
+      className="mt-2 h-12 w-full rounded-xl bg-[#a76d60] font-semibold text-[#f7f1ea] hover:bg-[#8b574c] hover:text-[#f7f1ea] dark:bg-[#e0d0c1] dark:text-[#2f201c] dark:hover:bg-[#c9b5a3] dark:hover:text-[#2f201c]"
     >
       {children}
     </Button>
@@ -89,10 +89,10 @@ export function AuthPrimaryButton({
 }
 
 export const authInputClassName =
-  "h-12 rounded-xl border-zinc-200 bg-white px-3.5 text-sm text-zinc-900 placeholder:text-zinc-400 focus-visible:border-[#a394e7] focus-visible:ring-[#a394e7]/25 dark:bg-white dark:border-zinc-200 dark:text-zinc-900";
+  "h-12 rounded-xl border-[#a76d60]/30 bg-[#f7f1ea] px-3.5 text-sm text-[#2f201c] placeholder:text-[#8a6e66] focus-visible:border-[#a76d60] focus-visible:ring-[#a76d60]/25 dark:border-[#e0d0c1]/25 dark:bg-[#523a33] dark:text-[#e0d0c1] dark:placeholder:text-[#a89082]";
 
 export const authLabelClassName =
-  "text-[0.8rem] font-medium text-zinc-500";
+  "text-[0.8rem] font-medium text-[#6b4e47] dark:text-[#c9b5a3]";
 
 type Strength = "empty" | "weak" | "fair" | "strong";
 
