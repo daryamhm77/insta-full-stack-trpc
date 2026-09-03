@@ -47,7 +47,7 @@ services:
       - key: WEB_URL
         sync: false
       - key: CLOUDINARY_CLOUD_NAME
-        sync: false
+        value: veyzctql
       - key: CLOUDINARY_API_KEY
         sync: false
       - key: CLOUDINARY_API_SECRET
