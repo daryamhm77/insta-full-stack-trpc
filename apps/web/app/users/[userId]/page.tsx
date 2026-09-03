@@ -95,7 +95,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-svh bg-background">
+    <div className="min-h-svh">
       <ProfileNavigation />
 
       <div className="mx-auto max-w-4xl px-8 py-8 sm:px-10">
