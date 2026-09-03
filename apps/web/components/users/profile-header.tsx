@@ -11,6 +11,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+const statClassName = "inline-flex items-center gap-1.5 text-sm leading-none";
+
+const statButtonClassName = `${statClassName} h-auto min-h-0 rounded-none p-0 font-normal hover:bg-transparent`;
+
 interface ProfileHeaderProps {
   profile: UserProfile;
   onFollowToggle: () => void;
@@ -86,27 +90,27 @@ export default function ProfileHeader({
             </div>
           </div>
 
-          <div className="flex gap-8 text-sm">
-            <div>
-              <span className="font-semibold">{profile.postCount}</span>{" "}
+          <div className="flex items-center gap-8 text-sm">
+            <span className={statClassName}>
+              <span className="font-semibold">{profile.postCount}</span>
               <span className="text-muted-foreground">posts</span>
-            </div>
+            </span>
             <Button
               type="button"
               variant="ghost"
               onClick={onOpenFollowers}
-              className="h-auto p-0"
+              className={statButtonClassName}
             >
-              <span className="font-semibold">{profile.followerCount}</span>{" "}
+              <span className="font-semibold">{profile.followerCount}</span>
               <span className="text-muted-foreground">followers</span>
             </Button>
             <Button
               type="button"
               variant="ghost"
               onClick={onOpenFollowing}
-              className="h-auto p-0"
+              className={statButtonClassName}
             >
-              <span className="font-semibold">{profile.followingCount}</span>{" "}
+              <span className="font-semibold">{profile.followingCount}</span>
               <span className="text-muted-foreground">following</span>
             </Button>
           </div>

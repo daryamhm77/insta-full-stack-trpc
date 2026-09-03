@@ -11,11 +11,7 @@ export function AuthShell({ title, subtitle, children }: AuthShellProps) {
     <div className="auth-jobsly relative flex min-h-svh items-center justify-center overflow-hidden px-4 py-10 sm:px-6 sm:py-14">
       <div
         aria-hidden
-        className="absolute inset-0 bg-[#e8f2fb]"
-      />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_45%,rgba(255,186,140,0.55),transparent_52%),radial-gradient(ellipse_at_20%_20%,rgba(186,220,255,0.65),transparent_45%),radial-gradient(ellipse_at_85%_85%,rgba(255,210,230,0.35),transparent_40%)]"
+        className="absolute inset-0 bg-[color:var(--auth-surface)] bg-[image:var(--auth-backdrop)]"
       />
 
       <div className="relative z-10 w-full max-w-[440px]">

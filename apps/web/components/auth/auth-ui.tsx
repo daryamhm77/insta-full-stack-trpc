@@ -59,7 +59,7 @@ export function AuthGoogleButton({
       variant="ghost"
       disabled={disabled}
       onClick={onClick}
-      className="h-12 w-full"
+      className="h-12 w-full rounded-xl border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 hover:text-zinc-900"
     >
       <GoogleIcon />
       {label}
@@ -81,7 +81,7 @@ export function AuthPrimaryButton({
       type={type}
       variant="ghost"
       disabled={disabled}
-      className="mt-2 h-12 w-full"
+      className="mt-2 h-12 w-full rounded-xl bg-[#6f5ce0] text-white hover:bg-[#5e4bd0] hover:text-white"
     >
       {children}
     </Button>
